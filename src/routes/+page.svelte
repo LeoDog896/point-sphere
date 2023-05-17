@@ -8,7 +8,6 @@
 	$: generator = generators.find((gen) => gen.name === generatorName);
 
 	$: points = generator?.gen(count);
-	$: midPoint = points !== undefined ? getMidPoint(points) : [0, 0, 0];
 </script>
 
 <main>
@@ -42,6 +41,10 @@
 
 		<label for="count">Count:</label>
 		<input id="count" type="range" min="1" max="200" bind:value={count} />
+
+		{#if generator && !generator.pure}
+			<button on:click={() => (points = generator?.gen(count))}>Generate</button>
+		{/if}
 	</div>
 	<div class="display">
 		<Canvas>
@@ -53,14 +56,16 @@
 			<T.DirectionalLight position={[-3, 10, -10]} intensity={0.2} />
 			<T.AmbientLight intensity={0.2} />
 
-			{#each points as point}
-				<T.Mesh scale={0.05} position={add(point, neg(midPoint))} castShadow let:ref>
-					<InteractiveObject object={ref} interactive />
+			{#if generator && points}
+				{#each points as point}
+					<T.Mesh scale={0.05} position={add(point, neg(generator.offset))} castShadow let:ref>
+						<InteractiveObject object={ref} interactive />
 
-					<T.SphereGeometry />
-					<T.MeshStandardMaterial color="#333333" />
-				</T.Mesh>
-			{/each}
+						<T.SphereGeometry />
+						<T.MeshStandardMaterial color="#333333" />
+					</T.Mesh>
+				{/each}
+			{/if}
 		</Canvas>
 	</div>
 </main>
