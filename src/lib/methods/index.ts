@@ -3,6 +3,7 @@ import type { Point } from './type';
 
 interface SphereGenerator {
 	gen: (n: number) => Point[];
+	name: string;
 }
 
 export function getMidPoint(points: Point[]): Point {
@@ -26,6 +27,7 @@ export function neg(p: Point) {
 
 export const generators: SphereGenerator[] = [
 	{
+		name: "Kogan Spacing",
 		gen: jkogan
 	}
 ];

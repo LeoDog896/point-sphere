@@ -2,38 +2,79 @@
 	import { Canvas, InteractiveObject, OrbitControls, T } from '@threlte/core';
 	import { generators, getMidPoint, add, neg } from '../lib/methods';
 
-	const firstGenerator = generators[0];
+	let generatorName = generators[0].name;
+	$: generator = generators.find((gen) => gen.name === generatorName);
 
-	const points = firstGenerator.gen(100)
-	const midPoint = getMidPoint(points)
-
+	$: points = generator?.gen(100);
+	$: midPoint = points !== undefined ? getMidPoint(points) : [0, 0, 0];
 </script>
 
-<div>
-	<Canvas>
-		<T.PerspectiveCamera makeDefault position={[10, 10, 10]} fov={24}>
-			<OrbitControls enableDamping={true} enableZoom={true} />
-		</T.PerspectiveCamera>
+<main>
+	<div class="content">
+		<h1>Sphere Visualization</h1>
+		<p>
+			Various uniform sphere algorithms have been proposed in order to create a spherical object
+			that can either:
+		</p>
+		<ul>
+			<li>Fool the human eye (accurate <i>enough</i>)</li>
+			<li>Provide points with a perfect uniform distribution</li>
+		</ul>
+		<p>
+			However, the problem itself is inheriently biased, and none have solved it. Therefore, this
+			demonstation aims to show the many different algorithms for those choosing a sphere generation
+			approach.
+		</p>
+		<select bind:value={generatorName}>
+			{#each generators as gen}
+				<option value={gen.name}>
+					{gen.name}
+				</option>
+			{/each}
+		</select>
+	</div>
+	<div class="display">
+		<Canvas>
+			<T.PerspectiveCamera makeDefault position={[10, 10, 10]} fov={24}>
+				<OrbitControls enablePan={false} enableDamping={true} enableZoom={true} />
+			</T.PerspectiveCamera>
 
-		<T.DirectionalLight castShadow position={[3, 10, 10]} />
-		<T.DirectionalLight position={[-3, 10, -10]} intensity={0.2} />
-		<T.AmbientLight intensity={0.2} />
+			<T.DirectionalLight castShadow position={[3, 10, 10]} />
+			<T.DirectionalLight position={[-3, 10, -10]} intensity={0.2} />
+			<T.AmbientLight intensity={0.2} />
 
-		{#each points as point}
-			<T.Mesh position={add(point, neg(midPoint))} castShadow let:ref>
-				<InteractiveObject
-					object={ref}
-					interactive
-				/>
+			{#each points as point}
+				<T.Mesh scale={0.05} position={add(point, neg(midPoint))} castShadow let:ref>
+					<InteractiveObject object={ref} interactive />
 
-				<T.SphereGeometry />
-				<T.MeshStandardMaterial color="#333333" />
-			</T.Mesh>
-		{/each}
-	</Canvas>
-</div>
+					<T.SphereGeometry />
+					<T.MeshStandardMaterial color="#333333" />
+				</T.Mesh>
+			{/each}
+		</Canvas>
+	</div>
+</main>
 
 <style>
+	main {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: row;
+	}
+
+	div.content {
+		height: calc(100% - 4rem);
+		width: fit-content;
+		border-right: 2px solid darkgray;
+		padding: 2rem;
+		background-color: #eeeeee;
+	}
+
+	h1 {
+		white-space: nowrap;
+	}
+
 	:global(body, html) {
 		height: 100%;
 		width: 100%;
@@ -41,7 +82,7 @@
 		padding: 0;
 	}
 
-	div {
+	div.display {
 		height: 100%;
 		width: 100%;
 	}
