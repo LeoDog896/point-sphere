@@ -7,6 +7,11 @@ interface SphereGenerator {
 	name: string;
 	pure: boolean;
 	offset: Point;
+	params: {
+		name: string,
+		from: number,
+		to: number
+	}[]
 }
 
 export function add(a: Point, b: Point) {
@@ -22,13 +27,27 @@ export const generators: SphereGenerator[] = [
 		name: "Kogan Spacing",
 		gen: jkogan,
 		pure: true,
-		offset: [0, 0, 0]
+		offset: [0, 0, 0],
+		params: [
+			{
+				name: "amount",
+				from: 1,
+				to: 100,
+			}
+		]
 	},
 	{
 		name: "Fibbonachi Sphere",
 		gen: fibbonachiSphere,
 		pure: true,
-		offset: [0, 0, 0]
+		offset: [0, 0, 0],
+		params: [
+			{
+				name: "amount",
+				from: 1,
+				to: 100,
+			}
+		]
 	},
 	{
 		name: "Random",
@@ -42,6 +61,30 @@ export const generators: SphereGenerator[] = [
 			});
 		},
 		pure: false,
-		offset: [0, 0, 0]
+		offset: [0, 0, 0],
+		params: [
+			{
+				name: "amount",
+				from: 1,
+				to: 100,
+			}
+		]
+	},
+	{
+		name: "UV Sphere",
+		pure: true,
+		offset: [0, 0, 0],
+		params: [
+			{
+				name: "Stacks",
+				from: 1,
+				to: 100
+			},
+			{
+				name: "Stacks",
+				from: 1,
+				to: 10
+			}
+		]
 	}
 ];

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Canvas, InteractiveObject, OrbitControls, T } from '@threlte/core';
 	import { generators, add, neg } from '../lib/methods';
+	import { SphereGeometry } from 'three';
 
 	let generatorName = generators[0].name;
 	let count = 100;
