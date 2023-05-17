@@ -1,18 +1,36 @@
-<script>
+<script lang="ts">
 	import { Canvas, InteractiveObject, OrbitControls, T } from '@threlte/core';
-	import { generators, getMidPoint, add, neg } from '../lib/methods';
+	import { generators, add, neg } from '../lib/methods';
 
 	let generatorName = generators[0].name;
 	let count = 100;
 
 	$: generator = generators.find((gen) => gen.name === generatorName);
 
+	type Color = [r: number, g: number, b: number]
+
+	let colorStart: Color = [48, 165, 176];
+	let colorEnd: Color = [105, 48, 176];
+
+	/** 
+	 * Gets a color between two colors, where
+	 * amount is between 0 and 1.
+	 */
+	function betweenColor(start: Color, end: Color, amount: number) {
+		return [
+			Math.round(start[0] + (end[0] - start[0]) * amount),
+			Math.round(start[1] + (end[1] - start[1]) * amount),
+			Math.round(start[2] + (end[2] - start[2]) * amount),
+		];
+	}
+
 	$: points = generator?.gen(count);
 </script>
 
 <main>
 	<div class="content">
-		<h1>Sphere Visualization</h1>
+		<h1>Point Spheres</h1>
+		<h2>Generating Equidistant points on a Sphere's Surface</h2>
 		<p>
 			Various uniform sphere algorithms have been proposed in order to create a spherical object
 			that can either:
@@ -54,15 +72,16 @@
 
 			<T.DirectionalLight castShadow position={[3, 10, 10]} />
 			<T.DirectionalLight position={[-3, 10, -10]} intensity={0.2} />
-			<T.AmbientLight intensity={0.2} />
+			<T.AmbientLight intensity={0.9} />
 
 			{#if generator && points}
 				{#each points as point}
+					{@const color = betweenColor(colorStart, colorEnd, (point[2] + 1) / 2)}
 					<T.Mesh scale={0.05} position={add(point, neg(generator.offset))} castShadow let:ref>
 						<InteractiveObject object={ref} interactive />
 
 						<T.SphereGeometry />
-						<T.MeshStandardMaterial color="#333333" />
+						<T.MeshStandardMaterial color="rgb({color[0]}, {color[1]}, {color[2]})" />
 					</T.Mesh>
 				{/each}
 			{/if}

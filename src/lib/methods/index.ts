@@ -1,3 +1,4 @@
+import { fibbonachiSphere } from './fibbonacci';
 import { generatePoints as jkogan } from './jkogan';
 import type { Point } from './type';
 
@@ -6,17 +7,6 @@ interface SphereGenerator {
 	name: string;
 	pure: boolean;
 	offset: Point;
-}
-
-export function getMidPoint(points: Point[]): Point {
-	return points
-		.reduce(
-			(acc, cur) => {
-				return [acc[0] + cur[0], acc[1] + cur[1], acc[2] + cur[2]];
-			},
-			[0, 0, 0]
-		)
-		.map((x) => x / points.length) as Point;
 }
 
 export function add(a: Point, b: Point) {
@@ -31,6 +21,12 @@ export const generators: SphereGenerator[] = [
 	{
 		name: "Kogan Spacing",
 		gen: jkogan,
+		pure: true,
+		offset: [0, 0, 0]
+	},
+	{
+		name: "Fibbonachi Sphere",
+		gen: fibbonachiSphere,
 		pure: true,
 		offset: [0, 0, 0]
 	},
