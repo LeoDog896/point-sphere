@@ -3,9 +3,11 @@
 	import { generators, getMidPoint, add, neg } from '../lib/methods';
 
 	let generatorName = generators[0].name;
+	let count = 100;
+
 	$: generator = generators.find((gen) => gen.name === generatorName);
 
-	$: points = generator?.gen(100);
+	$: points = generator?.gen(count);
 	$: midPoint = points !== undefined ? getMidPoint(points) : [0, 0, 0];
 </script>
 
@@ -25,6 +27,9 @@
 			demonstation aims to show the many different algorithms for those choosing a sphere generation
 			approach.
 		</p>
+
+		<h2>Generators</h2>
+
 		<select bind:value={generatorName}>
 			{#each generators as gen}
 				<option value={gen.name}>
@@ -32,6 +37,11 @@
 				</option>
 			{/each}
 		</select>
+
+		<h2>Parameters</h2>
+
+		<label for="count">Count:</label>
+		<input id="count" type="range" min="1" max="200" bind:value={count} />
 	</div>
 	<div class="display">
 		<Canvas>

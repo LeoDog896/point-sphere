@@ -18,16 +18,28 @@ export function getMidPoint(points: Point[]): Point {
 }
 
 export function add(a: Point, b: Point) {
-	return [a[0] + b[0], a[1] + b[1], a[2] + b[2]] as Point;
+	return [a[0] + b[0], a[1] + b[1], a[2] + b[2]] satisfies Point;
 }
 
 export function neg(p: Point) {
-	return [-p[0], -p[1], -p[2]] as Point;
+	return [-p[0], -p[1], -p[2]] satisfies Point;
 }
 
 export const generators: SphereGenerator[] = [
 	{
 		name: "Kogan Spacing",
 		gen: jkogan
+	},
+	{
+		name: "Random",
+		gen: (n: number) => {
+			// make random points on a sphere
+			return Array(n).fill(0).map(() => {
+				const z = Math.random() * 2 - 1;
+				const theta = Math.random() * 2 * Math.PI;
+				const r = Math.sqrt(1 - z * z);
+				return [r * Math.cos(theta), r * Math.sin(theta), z];
+			});
+		}
 	}
 ];
