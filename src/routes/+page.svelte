@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { Canvas, InteractiveObject, OrbitControls, T } from '@threlte/core';
+	import { Canvas, OrbitControls, T, Three } from '@threlte/core';
 	import { generators, add, neg } from '../lib/methods';
-	import { SphereGeometry } from 'three';
+	import { Vector3 } from 'three';
+	import { ConvexGeometry } from 'three/examples/jsm/geometries/ConvexGeometry.js';
 
 	let generatorName = generators[0].name;
 	let count = 100;
@@ -78,13 +79,17 @@
 			{#if generator && points}
 				{#each points as point}
 					{@const color = betweenColor(colorStart, colorEnd, (point[2] + 1) / 2)}
-					<T.Mesh scale={0.05} position={add(point, neg(generator.offset))} castShadow let:ref>
-						<InteractiveObject object={ref} interactive />
-
+					<T.Mesh scale={0.05} position={add(point, neg(generator.offset))} castShadow>
 						<T.SphereGeometry />
 						<T.MeshStandardMaterial color="rgb({color[0]}, {color[1]}, {color[2]})" />
 					</T.Mesh>
 				{/each}
+
+				<!-- make geometry wireframe based on the points -->
+				<T.Mesh scale={1.01} position={generator.offset} castShadow>
+					<Three type={ConvexGeometry} args={[points.map((point) => new Vector3(...point))]} />
+					<T.MeshBasicMaterial wireframe />
+				</T.Mesh>
 			{/if}
 		</Canvas>
 	</div>

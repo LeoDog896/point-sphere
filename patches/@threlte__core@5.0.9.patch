@@ -1,0 +1,15 @@
+diff --git a/dist/controls/OrbitControls.svelte b/dist/controls/OrbitControls.svelte
+index d826427f837e09b6e8f336754e4cf4ee9524536c..08490004b9b13eee691f11962c2f56914ae98ea1 100644
+--- a/dist/controls/OrbitControls.svelte
++++ b/dist/controls/OrbitControls.svelte
+@@ -37,9 +37,7 @@ const parent = useParent();
+ const { renderer, invalidate } = useThrelte();
+ if (!renderer)
+     throw new Error('Threlte Context missing: Is <OrbitControls> a child of <Canvas>?');
+-if (!($parent instanceof Camera)) {
+-    throw new Error('Parent missing: <OrbitControls> need to be a child of a <Camera>');
+-}
++
+ const dispatch = createEventDispatcher();
+ const onChange = () => {
+     invalidate('Orbitcontrols: change event');

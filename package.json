@@ -32,5 +32,10 @@
 		"typescript": "^5.0.0",
 		"vite": "^4.3.0"
 	},
-	"type": "module"
+	"type": "module",
+	"pnpm": {
+		"patchedDependencies": {
+			"@threlte/core@5.0.9": "patches/@threlte__core@5.0.9.patch"
+		}
+	}
 }
