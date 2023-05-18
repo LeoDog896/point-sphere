@@ -37,6 +37,11 @@
 		<h1>Point Spheres</h1>
 		<h2>Generating Equidistant points on a Sphere's Surface</h2>
 		<p>
+			This problem is more commonly known as a variant of 
+			the <a href="https://en.wikipedia.org/wiki/Tammes_problem">Tammes Problem</a> or the
+			generalized <a href="https://en.wikipedia.org/wiki/Thomson_problem">Thomson Problem</a>.
+		</p>
+		<p>
 			Various uniform sphere algorithms have been proposed in order to create a spherical object
 			that can either:
 		</p>
@@ -62,7 +67,7 @@
 			</h2>
 
 			<p>
-				{generator.description}
+				{@html generator.description}
 			</p>
 		{/if}
 

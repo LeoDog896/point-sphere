@@ -28,13 +28,15 @@ export function neg(p: Point) {
 export const generators: SphereGenerator[] = [
 	{
 		name: 'Kogan Spacing',
-		description: `Jonathan Kogan's new algorithm for spacing equidistant points is a heuristic approach that takes the way that previous algorithms have failed and uses that as training data for an algorithm that works well, and fast. It is currently the best known one available, but still has its flaws.`,
+		description: `<a href="https://scholar.rose-hulman.edu/cgi/viewcontent.cgi?article=1387&context=rhumj">Jonathan Kogan's new algorithm</a> for spacing
+		equidistant points is a heuristic approach that takes the way that previous algorithms have failed and uses that as training data for an algorithm that works well,
+		and fast. It is currently the best known one available, but still has its flaws.`,
 		gen: jkogan,
 		pure: true,
 		offset: [0, 0, 0],
 		params: [
 			{
-				name: 'amount',
+				name: 'Amount',
 				from: 1,
 				to: 500,
 				value: 100
@@ -49,7 +51,7 @@ export const generators: SphereGenerator[] = [
 		offset: [0, 0, 0],
 		params: [
 			{
-				name: 'amount',
+				name: 'Amount',
 				from: 1,
 				to: 500,
 				value: 100
@@ -74,7 +76,7 @@ export const generators: SphereGenerator[] = [
 		offset: [0, 0, 0],
 		params: [
 			{
-				name: 'amount',
+				name: 'Amount',
 				from: 1,
 				to: 500,
 				value: 100
