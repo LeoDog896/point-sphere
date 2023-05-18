@@ -5,7 +5,7 @@
 	import { ConvexGeometry } from 'three/examples/jsm/geometries/ConvexGeometry.js';
 
 	let generatorName = generators[0].name;
-	
+
 	$: params = generator?.params.map((param) => param.value);
 	$: generator = generators.find((gen) => gen.name === generatorName);
 
@@ -50,15 +50,21 @@
 			approach.
 		</p>
 
-		<h2>Generators</h2>
+		{#if generator}
+			<h2>
+				Generator: <select bind:value={generatorName}>
+					{#each generators as gen}
+						<option value={gen.name}>
+							{gen.name}
+						</option>
+					{/each}
+				</select>
+			</h2>
 
-		<select bind:value={generatorName}>
-			{#each generators as gen}
-				<option value={gen.name}>
-					{gen.name}
-				</option>
-			{/each}
-		</select>
+			<p>
+				{generator.description}
+			</p>
+		{/if}
 
 		{#if generator}
 			<h1>Options</h1>
@@ -77,7 +83,9 @@
 			{/each}
 
 			{#if !generator.pure}
-				<button on:click={() => (points = params ? generator?.gen(...params) : undefined)}>Generate</button>
+				<button on:click={() => (points = params ? generator?.gen(...params) : undefined)}
+					>Generate</button
+				>
 			{/if}
 		{/if}
 

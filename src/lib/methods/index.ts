@@ -85,7 +85,8 @@ export const generators: SphereGenerator[] = [
 		name: 'UV Sphere',
 		pure: true,
 		offset: [0, 0, 0],
-		description: "The UV Sphere is mainly meant to design a clean UV map for spheres, but it also is seldom used for point generation on spheres. However, it is barely accurate.",
+		description:
+			'The UV Sphere is mainly meant to design a clean UV map for spheres, but it also is seldom used for point generation on spheres. However, it is barely accurate.',
 		gen: uvSphere,
 		params: [
 			{
@@ -102,4 +103,4 @@ export const generators: SphereGenerator[] = [
 			}
 		]
 	}
-]
+];
