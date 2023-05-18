@@ -34,7 +34,7 @@
 
 <main>
 	<div class="content">
-		<h1>Point Spheres</h1>
+		<h1><a href="https://github.com/LeoDog896/point-sphere">Point Spheres</a></h1>
 		<h2>Generating Equidistant points on a Sphere's Surface</h2>
 		<p>
 			This problem is more commonly known as a variant of 
