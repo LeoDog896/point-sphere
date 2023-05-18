@@ -1,4 +1,4 @@
-# point-sphere
+# [point-sphere](https://leodog896.github.io/point-sphere/)
 
 this website visualizes proposed accurate-enough solutions to larger numbers of N for the generalized [Thomson Problem](https://en.wikipedia.org/wiki/Thomson_problem).
 
