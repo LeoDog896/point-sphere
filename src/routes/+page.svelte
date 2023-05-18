@@ -154,10 +154,6 @@
 		background-color: #eeeeee;
 	}
 
-	h1 {
-		white-space: nowrap;
-	}
-
 	:global(body, html) {
 		height: 100%;
 		width: 100%;
@@ -168,5 +164,23 @@
 	div.display {
 		height: 100%;
 		width: 100%;
+	}
+
+	@media (max-width: 800px) {
+		main {
+			flex-direction: column;
+		}
+
+		div.content {
+			height: fit-content;
+			width: 100%;
+			border-right: none;
+			border-bottom: 2px solid darkgray;
+		}
+
+		div.display {
+			height: 100%;
+			width: 100%;
+		}
 	}
 </style>
