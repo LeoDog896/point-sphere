@@ -8,12 +8,12 @@
 
 	$: generator = generators.find((gen) => gen.name === generatorName);
 
-	type Color = [r: number, g: number, b: number]
+	type Color = [r: number, g: number, b: number];
 
 	let colorStart: Color = [48, 165, 176];
 	let colorEnd: Color = [105, 48, 176];
 
-	/** 
+	/**
 	 * Gets a color between two colors, where
 	 * amount is between 0 and 1.
 	 */
@@ -21,7 +21,7 @@
 		return [
 			Math.round(start[0] + (end[0] - start[0]) * amount),
 			Math.round(start[1] + (end[1] - start[1]) * amount),
-			Math.round(start[2] + (end[2] - start[2]) * amount),
+			Math.round(start[2] + (end[2] - start[2]) * amount)
 		];
 	}
 
@@ -55,11 +55,6 @@
 				</option>
 			{/each}
 		</select>
-
-		<h2>Parameters</h2>
-
-		<label for="count">Count:</label>
-		<input id="count" type="range" min="1" max="200" bind:value={count} />
 
 		{#if generator && !generator.pure}
 			<button on:click={() => (points = generator?.gen(count))}>Generate</button>
