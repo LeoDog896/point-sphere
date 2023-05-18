@@ -5,14 +5,17 @@
 	import { ConvexGeometry } from 'three/examples/jsm/geometries/ConvexGeometry.js';
 
 	let generatorName = generators[0].name;
-	let count = 100;
-
+	
+	$: params = generator?.params.map((param) => param.value);
 	$: generator = generators.find((gen) => gen.name === generatorName);
 
 	type Color = [r: number, g: number, b: number];
 
 	let colorStart: Color = [48, 165, 176];
 	let colorEnd: Color = [105, 48, 176];
+
+	let showPoints = true;
+	let showWireframe = true;
 
 	/**
 	 * Gets a color between two colors, where
@@ -26,7 +29,7 @@
 		];
 	}
 
-	$: points = generator?.gen(count);
+	$: points = params ? generator?.gen(...params) : undefined;
 </script>
 
 <main>
@@ -57,9 +60,38 @@
 			{/each}
 		</select>
 
-		{#if generator && !generator.pure}
-			<button on:click={() => (points = generator?.gen(count))}>Generate</button>
+		{#if generator}
+			<h1>Options</h1>
+
+			{#each generator.params as param}
+				<label for={param.name}>
+					{param.name}:
+					<input
+						type="number"
+						min={param.from}
+						max={param.to}
+						name={param.name}
+						bind:value={param.value}
+					/>
+				</label>
+			{/each}
+
+			{#if !generator.pure}
+				<button on:click={() => (points = params ? generator?.gen(...params) : undefined)}>Generate</button>
+			{/if}
 		{/if}
+
+		<h1>Display</h1>
+
+		<label for="showPoints">
+			<input type="checkbox" bind:checked={showPoints} id="showPoints" />
+			Show Points
+		</label>
+
+		<label for="showWireframe">
+			<input type="checkbox" bind:checked={showWireframe} id="showWireframe" />
+			Show Wireframe
+		</label>
 	</div>
 	<div class="display">
 		<Canvas>
@@ -72,19 +104,22 @@
 			<T.AmbientLight intensity={0.9} />
 
 			{#if generator && points}
-				{#each points as point}
-					{@const color = betweenColor(colorStart, colorEnd, (point[2] + 1) / 2)}
-					<T.Mesh scale={0.05} position={add(point, neg(generator.offset))} castShadow>
-						<T.SphereGeometry />
-						<T.MeshStandardMaterial color="rgb({color[0]}, {color[1]}, {color[2]})" />
-					</T.Mesh>
-				{/each}
+				{#if showPoints}
+					{#each points as point}
+						{@const color = betweenColor(colorStart, colorEnd, (point[2] + 1) / 2)}
+						<T.Mesh scale={0.05} position={add(point, neg(generator.offset))} castShadow>
+							<T.SphereGeometry />
+							<T.MeshStandardMaterial color="rgb({color[0]}, {color[1]}, {color[2]})" />
+						</T.Mesh>
+					{/each}
+				{/if}
 
-				<!-- make geometry wireframe based on the points -->
-				<T.Mesh scale={1.01} position={generator.offset} castShadow>
-					<Three type={ConvexGeometry} args={[points.map((point) => new Vector3(...point))]} />
-					<T.MeshBasicMaterial wireframe />
-				</T.Mesh>
+				{#if showWireframe}
+					<T.Mesh scale={1.01} position={generator.offset} castShadow>
+						<Three type={ConvexGeometry} args={[points.map((point) => new Vector3(...point))]} />
+						<T.MeshBasicMaterial wireframe />
+					</T.Mesh>
+				{/if}
 			{/if}
 		</Canvas>
 	</div>

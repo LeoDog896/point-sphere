@@ -13,6 +13,7 @@ interface SphereGenerator {
 		name: string;
 		from: number;
 		to: number;
+		value: number;
 	}[];
 }
 
@@ -35,7 +36,8 @@ export const generators: SphereGenerator[] = [
 			{
 				name: 'amount',
 				from: 1,
-				to: 100
+				to: 500,
+				value: 100
 			}
 		]
 	},
@@ -49,7 +51,8 @@ export const generators: SphereGenerator[] = [
 			{
 				name: 'amount',
 				from: 1,
-				to: 100
+				to: 500,
+				value: 100
 			}
 		]
 	},
@@ -73,7 +76,8 @@ export const generators: SphereGenerator[] = [
 			{
 				name: 'amount',
 				from: 1,
-				to: 100
+				to: 500,
+				value: 100
 			}
 		]
 	},
@@ -85,15 +89,17 @@ export const generators: SphereGenerator[] = [
 		gen: uvSphere,
 		params: [
 			{
-				name: 'Stacks',
+				name: 'Slices',
 				from: 1,
-				to: 100
+				to: 100,
+				value: 10
 			},
 			{
 				name: 'Stacks',
 				from: 1,
-				to: 10
+				to: 100,
+				value: 10
 			}
 		]
 	}
-];
+]
