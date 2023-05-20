@@ -152,6 +152,7 @@
 		border-right: 2px solid darkgray;
 		padding: 2rem;
 		background-color: #eeeeee;
+		overflow-y: scroll;
 	}
 
 	:global(body, html) {
